@@ -15,7 +15,7 @@ class ProductController extends Controller
         $products = Product::paginate(20);
         return new ProductCollection($products);
     }
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $add_product = Product::create($request->validated());
         return response()->json($add_product, 201);
@@ -31,6 +31,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->update($request->validated());
+        $product->save();
         return new ProductResource($product);
     }
 

@@ -10,13 +10,16 @@ const routes = useRouter();
 const product = ref({
     name: '',
     price: '',
-    category_id: ''
+    category_id: '',
+    description: ''
 });
 const categories = ref([])
 
 const fetchProduct = async () => {
     try {
-        const response = await axios.get(`/api/products/${route.params.id}`);
+        console.log(route.params)
+        const response = await axios.get(`/api/show/${route.params.id}`);
+        console.log(response.data)
         product.value = response.data.data;
     } catch (error) {
         console.error(error);
@@ -34,6 +37,7 @@ const fetchCategories = async () => {
 
 const updateProduct = async () => {
     try {
+        console.log(product)
         await axios.put(`/api/products/${route.params.id}`, product.value);
         // router.push('/products');
     } catch (error) {
@@ -54,6 +58,10 @@ onMounted(() => {
             <div class="form-group mb-4">
                 <label for="name" class="form-label">Name:</label>
                 <input type="text" v-model="product.name" id="name" class="form-control" placeholder="Enter product name" />
+            </div>
+            <div class="form-group mb-4">
+                <label for="description" class="form-label">Description:</label>
+                <input type="text" v-model="product.description" id="description" class="form-control" placeholder="Enter product description" />
             </div>
             <div class="form-group mb-4">
                 <label for="price" class="form-label">Price:</label>

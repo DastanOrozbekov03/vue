@@ -208,7 +208,7 @@ const  deleteProduct = async (id) => {
                     <p><strong>Name:</strong> {{ selectProduct.name }}</p>
                     <p><strong>Price:</strong> {{ selectProduct.price }}</p>
                     <p><strong>Category:</strong> {{ selectProduct.category_id }}</p>
-                    <router-link to="/update_product"><i class="fas fa-edit"></i></router-link>
+                    <router-link :to="{name: 'detailUrl', params: {id:selectProduct.id}}"><i class="fas fa-edit"></i></router-link>
                 </div>
             </div>
         </div>

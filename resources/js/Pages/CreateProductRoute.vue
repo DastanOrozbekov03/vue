@@ -16,7 +16,7 @@ const product = ref(
 const categories = ref([]);
 const fetchCategories = async () => {
     try {
-        const response = await axios.get('api/categories');
+        const response = await axios.get('/api/categories');
         categories.value = response.data.data;
         console.log(categories.value)
     } catch (error) {
@@ -30,7 +30,7 @@ onMounted(() => {
 
 const addProduct = async () => {
     try {
-        const response = await axios.post('http://127.0.0.1:8000/api/products/create', product.value);
+        const response = await axios.post('/api/products/create', product.value);
         console.log('Product added:', response.data);
 
         product.value = {
