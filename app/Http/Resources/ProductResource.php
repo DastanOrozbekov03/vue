@@ -19,6 +19,7 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'price' => $this->price,
             'category_id' => $this->category->name,
+            'is_favorite' => $this->favorites()->where('user_id', auth('sanctum')->id())->exists(),
         ];
     }
 }

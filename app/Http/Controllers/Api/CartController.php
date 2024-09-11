@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CartRequest;
 use App\Http\Resources\CartCollection;
 //use App\Models\Auth;
+use App\Http\Resources\CartResource;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
@@ -15,23 +16,26 @@ class CartController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
+
+        $userId = auth('sanctum')->id();
+        if (!$userId) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
         $cartItems = Cart::where('user_id', $userId)->get();
         return new CartCollection($cartItems);
     }
+
     public function add(Product $product)
     {
-
-        dd(Session::get('token'));
-        $userId =
-
+        $userId = auth('sanctum')->id();
 
         $cartItem = Cart::where('product_id', $product->id)
                         ->where('user_id', $userId)
                         ->first();
 
-        dd($product->id, $userId);
-        if ($cartItem) {
+
+        if (!empty($cartItem)) {
             $cartItem->quantity++;
             $cartItem->save();
         } else {
@@ -44,10 +48,16 @@ class CartController extends Controller
         return response()->json(['message' => 'Product added to cart successfully']);
     }
 
-//    public function removeItem(CartRequest $request)
-//    {
-//        $cartItem = Cart::where('product_id', request('product_id'))->delete();
-//
-//        return response()->json(['message' => 'Product removed from cart']);
-//    }
+    public function clear()
+    {
+        $userId = auth('sanctum')->id();
+
+        if (!$userId) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        Cart::where('user_id', $userId)->delete();
+
+        return response()->json(['message' => 'Cart cleared successfully']);
+    }
 }

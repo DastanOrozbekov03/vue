@@ -48,7 +48,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
         \Illuminate\Support\Facades\Session::put('token', $token);
 
-        dd(\Illuminate\Support\Facades\Session::get('token'));
+//        dd(\Illuminate\Support\Facades\Session::get('token'));
 
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer',]);
 }

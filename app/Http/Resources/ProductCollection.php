@@ -16,7 +16,10 @@ class ProductCollection extends ResourceCollection
     {
 //        dd($this->collection);
         return [
-            "data" => $this->collection
+            "data" => $this->collection,
+            'current_page' => $this->resource->currentPage(),
+            'last_page' => $this->resource->lastPage(),
+            'total' => $this->resource->total(),
         ];
     }
 }

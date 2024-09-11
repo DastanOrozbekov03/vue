@@ -1,30 +1,43 @@
 import {createRouter, createWebHistory} from "vue-router";
+import layout from "../Pages/layout.vue";
 
 const routes = [
     {
-    path: "/",
-    component: ()=> import("../Pages/HomeRoute.vue"),
+        path: '/',
+        component: layout,
+        children: [
+            {
+                path: "/category",
+                component: () => import("../Pages/CategoryRoute.vue"),
+            },
+            {
+                path: "/products",
+                component: ()=> import("../Pages/ProductRoute.vue"),
+            },
+
+            {
+                path: "/create_product",
+                component: () => import("../Pages/CreateProductRoute.vue")
+            },
+            {
+                path: "/auth",
+                component: () => import("../Pages/AuthRoute.vue")
+            },
+            {
+                path: "/login",
+                component: () => import("../Pages/LoginRoute.vue")
+            },
+            {
+                path: "/carts",
+                component: () => import("../Pages/CartRoute.vue")
+            },
+            {
+                path: "/update_product",
+                component: () => import("../Pages/EditProduct.vue")
+            }
+        ]
     },
-    {
-        path: "/category",
-        component: () => import("../Pages/TestRoute.vue"),
-    },
-    {
-        path: "/create_product",
-        component: () => import("../Pages/CreateProductRoute.vue")
-    },
-    {
-        path: "/auth",
-        component: () => import("../Pages/AuthRoute.vue")
-    },
-    {
-        path: "/login",
-        component: () => import("../Pages/LoginRoute.vue")
-    },
-    {
-        path: "/cart",
-        component: () => import("../Pages/CartRoute.vue")
-    }
+
 ];
 
 export default createRouter({
